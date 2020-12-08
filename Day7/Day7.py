@@ -1,49 +1,37 @@
 import re
 
-class Graph:
-    class Vertex:
-       def __init__(self):
-            self.neighbors = []
 
-    def __init__(self):
-        self.vertices = {}
-
-
-def dfs(graph, v, final, visited):
-    global count
-    print(f'\tVisiting: {v}')
-    # visited[v] = True
-    if v == final:
-        count += 1
+def dfs(graph, v, bags):
+    bags.add(v)
+    if v not in graph:  # Parent bag reached
+        return
     for neighbor in graph[v]:
-        if neighbor == final:
-            print(f'\t\tfound: {neighbor} ******************************')
-            count += 1
-        # if neighbor not in visited:
-        return dfs(graph, neighbor, final, visited)
-    return 0
+        dfs(graph, neighbor, bags)
 
 
 if __name__ == '__main__':
-    global count
-    count = 0
     filename = 'data.txt'
-    graph = {}
-    # Build graph using map of form {Vertex: [neighbor, .... neighbor]}
+    g = {}
+    # Build graph using map of form {Vertex: [neighbor_1, ...., neighbor_n]}
+    # Graph is built using inverse rules:
+    # Vertex n's neighbor list consists of bags that can hold n
     with open(filename) as f:
-        graph = {
-            y[0]: [
-                a[2:]
-                for a in re.split(', ', re.sub(' bag(s)*', '', y[1][:-1]))
-                if not a[2:].startswith(' other')
-            ]
-            for y in
-            [x.split(' bags contain ') for x in f.read().rstrip().split('\n')]
-        }
-    for vertex in graph.keys():
-        visited = {}
-        print(f'starting at: {vertex}')
-        dfs(graph, vertex, 'shiny gold', visited)
-    print(len(graph.keys()))
-    print(graph)
-    print(count)
+        for line in f:
+            v, w = line.rstrip().split(' bags contain ')
+            if w.find('other') > -1:
+                w = []
+            else:
+                w = re.split(',', re.sub('( bag(s)*|( )*(\d)+ )', '', w[:-1]))
+            for color in w:
+                if color not in g:
+                    g[color] = [v]
+                else:
+                    g[color].append(v)
+    bags = set()
+    # DFS from each of shiny gold's neighbors.  Add each encountered bag to the set
+    for neighbor in g['shiny gold']:
+        dfs(g, neighbor, bags)
+    print(bags)
+    print(
+        f'Number of bags that can ultimately hold a "shiny gold" bag: {len(bags)}'
+    )

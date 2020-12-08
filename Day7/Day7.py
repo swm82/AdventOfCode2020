@@ -1,5 +1,6 @@
 import re
 
+
 def dfs(graph, v, bags):
     bags.add(v)
     if v not in graph:  # Parent bag reached

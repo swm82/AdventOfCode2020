@@ -19,9 +19,8 @@ def part_2(adapter_list):
 
 
 # Recursively generates configuration permutations
-# Memoization (top down dynamic program) increases efficiency by saving permutations at each index,
-# and reuses those values for later computations
-# O(n)?
+# Memoization  increases efficiency by saving permutations at each index and reusing for later calculations
+# O(n) amortized
 def generate_permutations(adapter_list, i, memo):
     if i >= len(adapter_list) - 1:
         return 1

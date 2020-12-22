@@ -1,4 +1,4 @@
-#--- Day 11: Seating System ---
+# --- Day 11: Seating System ---
 ## Part one
 Your plane lands with plenty of time to spare. The final leg of your journey is a ferry that goes directly to the tropical island where you can finally start your vacation. As you reach the waiting area to board the ferry, you realize you're so early, nobody else has even arrived yet!
 
@@ -91,7 +91,7 @@ At this point, something interesting happens: the chaos stabilizes and further a
 
 Simulate your seating area by applying the seating rules repeatedly until no seats change state. **How many seats end up occupied?**
 
-##--- Part Two ---
+## --- Part Two ---
 As soon as people start to arrive, you realize your mistake. People don't just care about adjacent seats - they care about the first seat they can see in each of those eight directions!
 
 Now, instead of considering just the eight immediately adjacent seats, consider the first seat in each of those eight directions. For example, the empty seat below would see eight occupied seats:
